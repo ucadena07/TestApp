@@ -40,10 +40,11 @@ fun TestApp(){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TestAppTheme {
 
+@Preview
+@Composable
+fun TestAppPreview() {
+    TestAppTheme {
+        TestApp()
     }
 }
