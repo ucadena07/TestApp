@@ -4,12 +4,14 @@ package com.example.testapp.screens.splashScreen
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,9 +43,12 @@ fun SplashScreen(navController: NavHostController) {
     Surface(
         modifier = Modifier
             .padding(15.dp)
+
             .size(330.dp)
             .scale(scale.value),
-        color = Color.White
+        color = Color(0xFF303a46),
+        shape = CircleShape,
+        border = BorderStroke(width = 2.dp, color = Color.LightGray)
 
         ) {
         Column(
