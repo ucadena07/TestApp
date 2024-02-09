@@ -6,8 +6,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,6 +28,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -92,5 +99,61 @@ fun NkTextField(label: String, icon: ImageVector? = null){
             }
 
         }
+    )
+}
+
+@Composable
+fun NkPasswordTextField(label: String){
+    val textValue = rememberSaveable{
+        mutableStateOf("")
+    }
+
+    val passwordVisible =rememberSaveable{
+        mutableStateOf(false)
+    }
+
+
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(4.dp)),
+        label =  {Text(text = label) },
+        value = textValue.value,
+        onValueChange = {
+            textValue.value = it
+        },
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = BgColor,
+            unfocusedContainerColor = BgColor,
+            focusedLabelColor = MaterialTheme.colorScheme.primary,
+            focusedIndicatorColor = MaterialTheme.colorScheme.primary,
+            cursorColor = MaterialTheme.colorScheme.primary,
+
+            ),
+        keyboardOptions = KeyboardOptions(
+
+            keyboardType = KeyboardType.Password
+        ),
+        leadingIcon = {
+
+                Icon(imageVector = Icons.Default.Lock, contentDescription = "")
+
+
+        },
+        trailingIcon = {
+            if(passwordVisible.value){
+                IconButton(onClick = {passwordVisible.value = !passwordVisible.value }) {
+                    Icon(imageVector = Icons.Default.Visibility, contentDescription = "")
+                }
+
+            }else{
+                IconButton(onClick = {passwordVisible.value = !passwordVisible.value }) {
+                    Icon(imageVector = Icons.Default.VisibilityOff, contentDescription = "")
+                }
+
+            }
+
+        },
+        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()
     )
 }
