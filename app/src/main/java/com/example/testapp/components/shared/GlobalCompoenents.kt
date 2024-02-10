@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
@@ -39,6 +40,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -60,7 +62,8 @@ fun NormalTextComponent(value:String, modifier: Modifier = Modifier){
             fontSize = 24.sp,
             fontWeight = FontWeight.Normal,
             fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Color.DarkGray
         ),
     )
 }
@@ -73,12 +76,19 @@ fun HeadingTextComponent(value:String, modifier: Modifier = Modifier){
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            color = Color.DarkGray
         ),
     )
 }
 @Composable
-fun NkTextField(label: String, icon: ImageVector? = null){
+fun NkTextField(
+    label: String,
+    icon: ImageVector? = null,
+    imeAction: ImeAction = ImeAction.Next,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    onAction: KeyboardActions = KeyboardActions.Default
+    ){
     val textValue = rememberSaveable{
         mutableStateOf("")
     }
@@ -99,9 +109,11 @@ fun NkTextField(label: String, icon: ImageVector? = null){
             focusedLabelColor = MaterialTheme.colorScheme.primary,
             focusedIndicatorColor = MaterialTheme.colorScheme.primary,
             cursorColor = MaterialTheme.colorScheme.primary,
-
+            focusedTextColor = Color.DarkGray,
+            unfocusedTextColor = Color.DarkGray
         ),
-        keyboardOptions = KeyboardOptions.Default,
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
+
         leadingIcon = {
             if(icon != null){
                 Icon(imageVector = icon, contentDescription = "")
@@ -140,7 +152,8 @@ fun NkPasswordTextField(label: String){
             ),
         keyboardOptions = KeyboardOptions(
 
-            keyboardType = KeyboardType.Password
+            keyboardType = KeyboardType.Password,
+            imeAction = ImeAction.Done
         ),
         leadingIcon = {
 
@@ -180,7 +193,7 @@ fun NkButton(value: String){
                 .background(
                     brush = Brush.horizontalGradient(
                         listOf(
-                            MaterialTheme.colorScheme.secondary,
+                            MaterialTheme.colorScheme.primary,
                             MaterialTheme.colorScheme.primary
                         )
                     ),
