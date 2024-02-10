@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.testapp.components.shared.HeadingTextComponent
+import com.example.testapp.components.shared.NkButton
 import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
@@ -41,6 +42,8 @@ fun LoginScreen(navController: NavHostController?) {
           Spacer(modifier = Modifier.heightIn(20.dp))
           NkTextField(label = "Email", icon = Icons.Default.Email)
           NkPasswordTextField(label = "Password")
+          Spacer(modifier = Modifier.heightIn(20.dp))
+          NkButton(value = "Login")
       }
 
   }
