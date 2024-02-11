@@ -1,9 +1,10 @@
-package com.example.testapp.network
+package com.example.testapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.testapp.screens.ForgotPasswordScreen.ForgotScreen
 import com.example.testapp.screens.homeScreen.HomeScreen
 import com.example.testapp.screens.loginScreen.LoginScreen
 import com.example.testapp.screens.splashScreen.SplashScreen
@@ -17,6 +18,9 @@ fun ApplicationNavigation(){
         }
         composable(ApplicationScreens.LoginScreen.name){
             LoginScreen(navController)
+        }
+        composable(ApplicationScreens.ForgotScreen.name){
+            ForgotScreen(navController)
         }
         composable(ApplicationScreens.HomeScreen.name){
             HomeScreen(navController)

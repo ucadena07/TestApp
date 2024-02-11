@@ -11,18 +11,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Password
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -34,7 +27,7 @@ import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
 import com.example.testapp.components.shared.UnderlineTextComponent
-import com.example.testapp.network.ApplicationScreens
+import com.example.testapp.navigation.ApplicationScreens
 
 @Composable
 fun LoginScreen(navController: NavHostController?) {
@@ -57,7 +50,9 @@ fun LoginScreen(navController: NavHostController?) {
           NkTextField(label = "Email", icon = Icons.Default.Email)
           NkPasswordTextField(label = "Password", )
           Spacer(modifier = Modifier.heightIn(20.dp))
-          UnderlineTextComponent(value = "Forgot Password?")
+          UnderlineTextComponent(value = "Forgot Password?"){
+              navController?.navigate(ApplicationScreens.ForgotScreen.name)
+          }
           Spacer(modifier = Modifier.heightIn(20.dp))
           NkButton(value = "Login")
       }

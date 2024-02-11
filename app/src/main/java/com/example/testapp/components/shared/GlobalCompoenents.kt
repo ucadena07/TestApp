@@ -1,6 +1,7 @@
 package com.example.testapp.components.shared
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -180,8 +181,8 @@ fun NkPasswordTextField(label: String){
     )
 }
 @Composable
-fun NkButton(value: String){
-    Button(onClick = { /*TODO*/ },
+fun NkButton(value: String, color: Color? =  MaterialTheme.colorScheme.primary, onClick: () -> Unit = {}){
+    Button(onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
@@ -193,14 +194,24 @@ fun NkButton(value: String){
                 .heightIn(48.dp)
                 .background(
                     brush = Brush.horizontalGradient(
-                        listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.primary
-                        )
+
+                            if(color != null) {
+                                listOf(
+                                    color,
+                                    color
+                                )
+                            }else{
+                                listOf(
+                                    MaterialTheme.colorScheme.primaryContainer,
+                                    MaterialTheme.colorScheme.primary
+                                )
+                            }
+
                     ),
-                    shape = RoundedCornerShape(50.dp)
+                    shape = RoundedCornerShape(30.dp)
                 ),
-            contentAlignment = Alignment.Center
+            contentAlignment = Alignment.Center,
+
         ){
                 Text(text = value, fontSize = 18.sp, fontWeight = FontWeight.Bold)
 
@@ -209,12 +220,15 @@ fun NkButton(value: String){
     }
 }
 @Composable
-fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier){
+fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier, onClick: () -> Unit = {}){
     Text(
         text = value,
         modifier = modifier
             .fillMaxWidth()
-            .heightIn(min = 40.dp),
+            .heightIn(min = 40.dp)
+            .clickable {
+                       onClick();
+            },
         style = TextStyle(
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
