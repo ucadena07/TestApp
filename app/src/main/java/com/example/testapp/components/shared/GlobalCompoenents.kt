@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.testapp.ui.theme.BgColor
@@ -206,4 +207,21 @@ fun NkButton(value: String){
         }
 
     }
+}
+@Composable
+fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier){
+    Text(
+        text = value,
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(min = 40.dp),
+        style = TextStyle(
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+            fontStyle = FontStyle.Normal,
+            textAlign = TextAlign.Center,
+            color = Color.LightGray
+        ),
+        textDecoration = TextDecoration.Underline
+    )
 }

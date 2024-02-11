@@ -33,6 +33,7 @@ import com.example.testapp.components.shared.NkButton
 import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
+import com.example.testapp.components.shared.UnderlineTextComponent
 import com.example.testapp.network.ApplicationScreens
 
 @Composable
@@ -45,22 +46,18 @@ fun LoginScreen(navController: NavHostController?) {
           .padding(28.dp)
   ) {
       Column(modifier = Modifier.fillMaxSize()) {
-          NormalTextComponent(value = "Welcome")
-          HeadingTextComponent(value = "Portal Sign In")
-          Spacer(modifier = Modifier.heightIn(20.dp))
+          NormalTextComponent(value = "Login")
+          HeadingTextComponent(value = "Welcome Back")
+          Spacer(modifier = Modifier.heightIn(15.dp))
           Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-              Text(
-                  modifier = Modifier
-                      .padding(15.dp),
-                  text = "Netkinetix",
-                  style = MaterialTheme.typography.headlineLarge,
-                  color = Color.DarkGray
-              )
+              Image(painter = painterResource(id = R.drawable.netk_logo_color), contentDescription = "logo")
           }
 
           Spacer(modifier = Modifier.heightIn(20.dp))
           NkTextField(label = "Email", icon = Icons.Default.Email)
           NkPasswordTextField(label = "Password", )
+          Spacer(modifier = Modifier.heightIn(20.dp))
+          UnderlineTextComponent(value = "Forgot Password?")
           Spacer(modifier = Modifier.heightIn(20.dp))
           NkButton(value = "Login")
       }
