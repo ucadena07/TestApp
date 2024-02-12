@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -31,11 +32,14 @@ fun ForgotScreen(navController: NavHostController?) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(28.dp)
+            .padding(15.dp)
     ) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
             HeadingTextComponent(value = "Password Reset")
-            Text(text = "Enter the email address linked to your account and you will receive an email containing a link to reset your password.")
+            Text(
+                text = "Enter the email address linked to your account and you will receive an email containing a link to reset your password.",
+                style = MaterialTheme.typography.titleSmall
+            )
             Spacer(modifier = Modifier.heightIn(20.dp))
             NkTextField(label = "Email", icon = Icons.Default.Email)
             Spacer(modifier = Modifier.heightIn(20.dp))
