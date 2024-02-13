@@ -118,12 +118,17 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     //navigation
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
-    val nav_version = "2.7.6"
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+    val nav_version = "2.7.7"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     //Icons
-    implementation("androidx.compose.material:material-icons-extended:1.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+
+    //Validation
+    val formconductor_version = "0.4.0"
+    implementation("me.naingaungluu.formconductor:core:$formconductor_version")
+    implementation("me.naingaungluu.formconductor:compose-ui:$formconductor_version")
 }
 
 kapt{

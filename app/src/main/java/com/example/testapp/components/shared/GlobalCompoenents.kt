@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -87,23 +88,28 @@ fun HeadingTextComponent(value:String, modifier: Modifier = Modifier){
 fun NkTextField(
     label: String,
     icon: ImageVector? = null,
+    isError: Boolean = false,
+    onValueChange: (String) -> Unit = { } ,
+    value: String? = "",
     imeAction: ImeAction = ImeAction.Next,
     keyboardType: KeyboardType = KeyboardType.Text,
     onAction: KeyboardActions = KeyboardActions.Default
     ){
     val textValue = rememberSaveable{
-        mutableStateOf("")
+        mutableStateOf(value)
     }
 
 
-    OutlinedTextField(
+    textValue.value?.let {
+        OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp)),
         label =  {Text(text = label) },
-        value = textValue.value,
+        value = it,
         onValueChange = {
             textValue.value = it
+            onValueChange(it)
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = BgColor,
@@ -123,6 +129,7 @@ fun NkTextField(
 
         }
     )
+    }
 }
 @Composable
 fun NkPasswordTextField(label: String){
@@ -181,12 +188,15 @@ fun NkPasswordTextField(label: String){
     )
 }
 @Composable
-fun NkButton(value: String, color: Color? =  MaterialTheme.colorScheme.primary, onClick: () -> Unit = {}){
+fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true, onClick: () -> Unit = {}){
+
+
     Button(onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
         contentPadding = PaddingValues(),
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(Color.Transparent)) {
         Box(
             modifier = Modifier
@@ -195,17 +205,17 @@ fun NkButton(value: String, color: Color? =  MaterialTheme.colorScheme.primary, 
                 .background(
                     brush = Brush.horizontalGradient(
 
-                            if(color != null) {
-                                listOf(
-                                    color,
-                                    color
-                                )
-                            }else{
-                                listOf(
-                                    MaterialTheme.colorScheme.primaryContainer,
-                                    MaterialTheme.colorScheme.primary
-                                )
-                            }
+                        if (color != null) {
+                            listOf(
+                                color,
+                                color
+                            )
+                        } else {
+                            listOf(
+                                MaterialTheme.colorScheme.primaryContainer,
+                                MaterialTheme.colorScheme.primary
+                            )
+                        }
 
                     ),
                     shape = RoundedCornerShape(30.dp)
@@ -227,7 +237,7 @@ fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier, onClick:
             .fillMaxWidth()
             .heightIn(min = 40.dp)
             .clickable {
-                       onClick();
+                onClick();
             },
         style = TextStyle(
             fontSize = 16.sp,

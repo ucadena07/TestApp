@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -31,7 +32,12 @@ import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
 import com.example.testapp.components.shared.UnderlineTextComponent
+import com.example.testapp.model.dto.AuthRequest
 import com.example.testapp.navigation.ApplicationScreens
+import me.naingaungluu.formconductor.FieldResult
+import me.naingaungluu.formconductor.FormResult
+import me.naingaungluu.formconductor.composeui.field
+import me.naingaungluu.formconductor.composeui.form
 
 @Composable
 fun LoginScreen(navController: NavHostController?) {
@@ -42,25 +48,35 @@ fun LoginScreen(navController: NavHostController?) {
           .background(Color.White)
           .padding(28.dp)
   ) {
-      val state = rememberScrollState()
-      LaunchedEffect(Unit) { state.animateScrollTo(100) }
-      Column(modifier = Modifier.fillMaxSize().verticalScroll(state)) {
-          NormalTextComponent(value = "Login")
-          HeadingTextComponent(value = "Welcome Back")
-          Spacer(modifier = Modifier.height(15.dp))
-          Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-              Image(painter = painterResource(id = R.drawable.netk_logo_color), contentDescription = "logo")
+      val Scrollstate = rememberScrollState()
+      LaunchedEffect(Unit) { Scrollstate.animateScrollTo(100) }
+      Column(modifier = Modifier
+          .fillMaxSize()
+          .verticalScroll(Scrollstate)) {
+          form(AuthRequest::class) {
+              NormalTextComponent(value = "Login")
+              HeadingTextComponent(value = "Welcome Back")
+              Spacer(modifier = Modifier.height(15.dp))
+              Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                  Image(painter = painterResource(id = R.drawable.netk_logo_color), contentDescription = "logo")
+              }
+
+              Spacer(modifier = Modifier.height(20.dp))
+              field(AuthRequest::email) {
+                  NkTextField(label = "Email", icon = Icons.Default.Email,value = state.value?.value.orEmpty(),
+                      onValueChange = this::setField,
+                      isError = resultState.value is FieldResult.Error)
+              }
+
+              NkPasswordTextField(label = "Password", )
+              Spacer(modifier = Modifier.height(20.dp))
+              UnderlineTextComponent(value = "Forgot Password?"){
+                  navController?.navigate(ApplicationScreens.ForgotScreen.name)
+              }
+              Spacer(modifier = Modifier.height(20.dp))
+              NkButton(value = "Login", enabled = this.formState.value is FormResult.Success)
           }
 
-          Spacer(modifier = Modifier.height(20.dp))
-          NkTextField(label = "Email", icon = Icons.Default.Email)
-          NkPasswordTextField(label = "Password", )
-          Spacer(modifier = Modifier.height(20.dp))
-          UnderlineTextComponent(value = "Forgot Password?"){
-              navController?.navigate(ApplicationScreens.ForgotScreen.name)
-          }
-          Spacer(modifier = Modifier.height(20.dp))
-          NkButton(value = "Login")
       }
 
   }
