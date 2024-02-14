@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.Surface
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -48,11 +46,11 @@ fun LoginScreen(navController: NavHostController?) {
           .background(Color.White)
           .padding(28.dp)
   ) {
-      val Scrollstate = rememberScrollState()
-      LaunchedEffect(Unit) { Scrollstate.animateScrollTo(100) }
+      val scrollState = rememberScrollState()
+      LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
       Column(modifier = Modifier
           .fillMaxSize()
-          .verticalScroll(Scrollstate)) {
+          .verticalScroll(scrollState)) {
           form(AuthRequest::class) {
               NormalTextComponent(value = "Login")
               HeadingTextComponent(value = "Welcome Back")
@@ -63,18 +61,24 @@ fun LoginScreen(navController: NavHostController?) {
 
               Spacer(modifier = Modifier.height(20.dp))
               field(AuthRequest::email) {
-                  NkTextField(label = "Email", icon = Icons.Default.Email,value = state.value?.value.orEmpty(),
+                  NkTextField(label = "Email",
+                      icon = Icons.Default.Email,value = state.value?.value.orEmpty(),
                       onValueChange = this::setField,
                       isError = resultState.value is FieldResult.Error)
               }
+              field(AuthRequest::password) {
+                  NkPasswordTextField(label = "Password",onValueChange = this::setField,
+                      isError = resultState.value is FieldResult.Error )
+              }
 
-              NkPasswordTextField(label = "Password", )
-              Spacer(modifier = Modifier.height(20.dp))
+              Spacer(modifier = Modifier.height(40.dp))
               UnderlineTextComponent(value = "Forgot Password?"){
                   navController?.navigate(ApplicationScreens.ForgotScreen.name)
               }
               Spacer(modifier = Modifier.height(20.dp))
+
               NkButton(value = "Login", enabled = this.formState.value is FormResult.Success)
+
           }
 
       }

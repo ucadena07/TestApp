@@ -107,10 +107,11 @@ fun NkTextField(
             .clip(RoundedCornerShape(4.dp)),
         label =  {Text(text = label) },
         value = it,
-        onValueChange = {
-            textValue.value = it
-            onValueChange(it)
+        onValueChange = {value ->
+            textValue.value = value
+            onValueChange(value)
         },
+         isError = isError,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = BgColor,
             unfocusedContainerColor = BgColor,
@@ -118,7 +119,8 @@ fun NkTextField(
             focusedIndicatorColor = MaterialTheme.colorScheme.primary,
             cursorColor = MaterialTheme.colorScheme.primary,
             focusedTextColor = Color.DarkGray,
-            unfocusedTextColor = Color.DarkGray
+            unfocusedTextColor = Color.DarkGray,
+
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
 
@@ -132,9 +134,12 @@ fun NkTextField(
     }
 }
 @Composable
-fun NkPasswordTextField(label: String){
+fun NkPasswordTextField(label: String,
+                        isError: Boolean = false,
+                        onValueChange: (String) -> Unit = { } ,
+                        value: String? = "",){
     val textValue = rememberSaveable{
-        mutableStateOf("")
+        mutableStateOf(value)
     }
 
     val passwordVisible =rememberSaveable{
@@ -142,15 +147,17 @@ fun NkPasswordTextField(label: String){
     }
 
 
-    OutlinedTextField(
+    textValue.value?.let {
+        OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp)),
         label =  {Text(text = label) },
-        value = textValue.value,
-        onValueChange = {
-            textValue.value = it
-        },
+        value = it,
+        onValueChange = {value ->
+            textValue.value = value
+            onValueChange(value)
+        }, isError = isError,
         colors = TextFieldDefaults.colors(
             focusedContainerColor = BgColor,
             unfocusedContainerColor = BgColor,
@@ -166,7 +173,7 @@ fun NkPasswordTextField(label: String){
         ),
         leadingIcon = {
 
-                Icon(imageVector = Icons.Default.Lock, contentDescription = "")
+            Icon(imageVector = Icons.Default.Lock, contentDescription = "")
 
 
         },
@@ -186,6 +193,7 @@ fun NkPasswordTextField(label: String){
         },
         visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation()
     )
+    }
 }
 @Composable
 fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true, onClick: () -> Unit = {}){
