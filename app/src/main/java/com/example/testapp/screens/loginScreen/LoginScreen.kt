@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.testapp.R
 import com.example.testapp.components.shared.HeadingTextComponent
@@ -38,7 +39,7 @@ import me.naingaungluu.formconductor.composeui.field
 import me.naingaungluu.formconductor.composeui.form
 
 @Composable
-fun LoginScreen(navController: NavHostController?) {
+fun LoginScreen(navController: NavHostController?, loginScreenViewModel: LoginScreenViewModel?) {
   Surface(
       color = Color.White,
       modifier = Modifier
@@ -67,7 +68,12 @@ fun LoginScreen(navController: NavHostController?) {
                       isError = resultState.value is FieldResult.Error)
               }
               field(AuthRequest::password) {
-                  NkPasswordTextField(label = "Password",onValueChange = this::setField,
+                  NkPasswordTextField(label = "Password",
+                      onValueChange = {
+                          this::setField
+                          loginScreenViewModel!!.authRequest.email = it
+                                      },
+
                       isError = resultState.value is FieldResult.Error )
               }
 
@@ -77,7 +83,9 @@ fun LoginScreen(navController: NavHostController?) {
               }
               Spacer(modifier = Modifier.height(20.dp))
 
-              NkButton(value = "Login", enabled = this.formState.value is FormResult.Success)
+              NkButton(value = "Login", enabled = this.formState.value is FormResult.Success){
+                  loginScreenViewModel!!.login()
+              }
 
           }
 
@@ -89,6 +97,6 @@ fun LoginScreen(navController: NavHostController?) {
 @Preview
 @Composable
 fun DefaultPreviewForLoginScreen(){
-    LoginScreen(navController = null)
+    LoginScreen(navController = null,null)
 }
 
