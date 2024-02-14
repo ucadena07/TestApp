@@ -69,10 +69,9 @@ fun LoginScreen(navController: NavHostController?, loginScreenViewModel: LoginSc
               }
               field(AuthRequest::password) {
                   NkPasswordTextField(label = "Password",
-                      onValueChange = {
+                      onValueChange =
                           this::setField
-                          loginScreenViewModel!!.authRequest.email = it
-                                      },
+                                      ,
 
                       isError = resultState.value is FieldResult.Error )
               }
