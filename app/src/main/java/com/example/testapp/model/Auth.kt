@@ -1,4 +1,4 @@
-package com.example.testapp.model.dto
+package com.example.testapp.model
 
 import me.naingaungluu.formconductor.annotations.EmailAddress
 import me.naingaungluu.formconductor.annotations.Form

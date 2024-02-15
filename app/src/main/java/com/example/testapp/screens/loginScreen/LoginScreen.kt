@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.testapp.R
 import com.example.testapp.components.shared.HeadingTextComponent
@@ -31,7 +30,7 @@ import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
 import com.example.testapp.components.shared.UnderlineTextComponent
-import com.example.testapp.model.dto.AuthRequest
+import com.example.testapp.model.AuthRequest
 import com.example.testapp.navigation.ApplicationScreens
 import me.naingaungluu.formconductor.FieldResult
 import me.naingaungluu.formconductor.FormResult
