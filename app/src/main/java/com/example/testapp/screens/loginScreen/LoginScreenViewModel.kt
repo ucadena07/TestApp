@@ -10,15 +10,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor() : ViewModel(){
-
-    //var authRequest : AuthRequest = AuthRequest()
     val authRequest = mutableStateOf(AuthRequest())
 
     init {
 
     }
 
-    fun login(){
+    fun login(home: () -> Unit = {}){
         Log.d("","${authRequest.value.email},${authRequest.value.password}")
     }
 

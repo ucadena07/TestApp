@@ -39,7 +39,7 @@ import me.naingaungluu.formconductor.composeui.field
 import me.naingaungluu.formconductor.composeui.form
 
 @Composable
-fun LoginScreen(navController: NavHostController?, loginScreenViewModel: LoginScreenViewModel?) {
+fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
   Surface(
       color = Color.White,
       modifier = Modifier
@@ -64,15 +64,19 @@ fun LoginScreen(navController: NavHostController?, loginScreenViewModel: LoginSc
               field(AuthRequest::email) {
                   NkTextField(label = "Email",
                       icon = Icons.Default.Email,value = state.value?.value.orEmpty(),
-                      onValueChange = this::setField,
+                      onValueChange = {
+                          setField(it)
+                          vm!!.authRequest.value = vm.authRequest.value.copy(email = it)
+                      },
                       isError = resultState.value is FieldResult.Error)
               }
               field(AuthRequest::password) {
                   NkPasswordTextField(label = "Password",
-                      onValueChange =
-                          this::setField
-                                      ,
+                      onValueChange ={
+                          setField(it)
+                          vm!!.authRequest.value = vm.authRequest.value.copy(password = it)
 
+                      },
                       isError = resultState.value is FieldResult.Error )
               }
 
@@ -83,7 +87,9 @@ fun LoginScreen(navController: NavHostController?, loginScreenViewModel: LoginSc
               Spacer(modifier = Modifier.height(20.dp))
 
               NkButton(value = "Login", enabled = this.formState.value is FormResult.Success){
-                  loginScreenViewModel!!.login()
+                  vm!!.login(){
+                      navController!!.navigate(ApplicationScreens.HomeScreen.name)
+                  }
               }
 
           }

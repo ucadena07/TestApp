@@ -239,21 +239,23 @@ fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true, onCl
 }
 @Composable
 fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier, onClick: () -> Unit = {}){
-    Text(
-        text = value,
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 40.dp)
-            .clickable {
-                onClick();
-            },
-        style = TextStyle(
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal,
-            fontStyle = FontStyle.Normal,
-            textAlign = TextAlign.Center,
-            color = Color.LightGray
-        ),
-        textDecoration = TextDecoration.Underline
-    )
+    Row(modifier= Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Text(
+            text = value,
+            modifier = modifier
+                .heightIn(min = 40.dp)
+                .clickable {
+                    onClick();
+                },
+            style = TextStyle(
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal,
+                textAlign = TextAlign.Center,
+                color = Color.LightGray
+            ),
+            textDecoration = TextDecoration.Underline
+        )
+    }
+
 }

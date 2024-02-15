@@ -1,5 +1,6 @@
 package com.example.testapp.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
@@ -23,7 +24,11 @@ fun ApplicationNavigation(){
             LoginScreen(navController,loginScreenViewModel)
         }
         composable(ApplicationScreens.ForgotScreen.name){
+            BackHandler(true) {
+
+            }
             ForgotScreen(navController)
+
         }
         composable(ApplicationScreens.HomeScreen.name){
             HomeScreen(navController)

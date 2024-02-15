@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.testapp.components.shared.HeadingTextComponent
 import com.example.testapp.components.shared.NkButton
 import com.example.testapp.components.shared.NkTextField
+import com.example.testapp.navigation.ApplicationScreens
 import com.example.testapp.screens.loginScreen.LoginScreen
 
 @Composable
@@ -46,7 +47,11 @@ fun ForgotScreen(navController: NavHostController?) {
             NkButton(value = "Reset Password")
             Spacer(modifier = Modifier.heightIn(20.dp))
             NkButton(value = "Back",color = MaterialTheme.colorScheme.secondary){
-                navController?.popBackStack()
+                navController?.navigate(ApplicationScreens.LoginScreen.name){
+                    popUpTo(ApplicationScreens.LoginScreen.name){
+                        inclusive = true
+                    }
+                }
             }
         }
     }
