@@ -130,6 +130,9 @@ dependencies {
     val formconductor_version = "0.4.0"
     implementation("me.naingaungluu.formconductor:core:$formconductor_version")
     implementation("me.naingaungluu.formconductor:compose-ui:$formconductor_version")
+
+    //Http Logging
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.7.2")
 }
 
 kapt{

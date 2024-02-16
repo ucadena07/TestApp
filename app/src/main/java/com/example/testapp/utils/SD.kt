@@ -1,5 +1,5 @@
 package com.example.testapp.utils
 
 object SD {
-    public val BaseUrl = ""
+     val BaseUrl = "https://camposbrothersfarms-dev.netkinetix.com/"
 }

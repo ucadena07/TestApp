@@ -4,11 +4,12 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.testapp.model.AuthRequest
+import com.example.testapp.repository.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginScreenViewModel @Inject constructor() : ViewModel(){
+class LoginScreenViewModel @Inject constructor(private  val repo: AccountRepository) : ViewModel(){
     val authRequest = mutableStateOf(AuthRequest())
 
     fun login(home: () -> Unit = {}){
