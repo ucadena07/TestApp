@@ -20,17 +20,16 @@ fun ApplicationNavigation(){
             SplashScreen(navController)
         }
         composable(ApplicationScreens.LoginScreen.name){
+            BackHandler(true) {}
             val loginScreenViewModel = hiltViewModel<LoginScreenViewModel>()
             LoginScreen(navController,loginScreenViewModel)
         }
         composable(ApplicationScreens.ForgotScreen.name){
-            BackHandler(true) {
-
-            }
+            BackHandler(true) {}
             ForgotScreen(navController)
-
         }
         composable(ApplicationScreens.HomeScreen.name){
+            BackHandler(true) {}
             HomeScreen(navController)
         }
     }

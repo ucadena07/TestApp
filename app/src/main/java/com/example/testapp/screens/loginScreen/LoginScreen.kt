@@ -47,6 +47,7 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
           .padding(28.dp)
   ) {
       val scrollState = rememberScrollState()
+
       LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
       Column(modifier = Modifier
           .fillMaxSize()
@@ -60,12 +61,12 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
               }
 
               Spacer(modifier = Modifier.height(20.dp))
-              field(AuthRequest::email) {
+              field(AuthRequest::userName) {
                   NkTextField(label = "Email",
                       icon = Icons.Default.Email,value = state.value?.value.orEmpty(),
                       onValueChange = {
                           setField(it)
-                          vm!!.authRequest.value = vm.authRequest.value.copy(email = it)
+                          vm!!.authRequest.value = vm.authRequest.value.copy(userName = it)
                       },
                       isError = resultState.value is FieldResult.Error)
               }

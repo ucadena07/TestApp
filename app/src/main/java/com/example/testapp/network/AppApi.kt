@@ -8,6 +8,6 @@ import javax.inject.Singleton
 
 @Singleton
 interface AppApi {
-    @POST
-    suspend fun login(@Body authRequest: AuthRequest) : AuthResponse
+    @POST("api/v1/Accounts/Login")
+    suspend fun login(@Body authRequest: AuthRequest) : ApiResponse<AuthResponse?>
 }
