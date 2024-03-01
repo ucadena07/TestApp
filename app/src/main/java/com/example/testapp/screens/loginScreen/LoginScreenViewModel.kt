@@ -14,12 +14,19 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(private  val repo: AccountRepository) : ViewModel(){
     val authRequest = mutableStateOf(AuthRequest())
+    val errorMsg = mutableStateOf("")
 
     fun login(home: () -> Unit = {}){
+        errorMsg.value = ""
         viewModelScope.launch {
             val resp = repo.login(authRequest.value)
             Log.d("API RESP",resp.toString())
-            home()
+            if(resp.isSuccess){
+                home()
+            }else{
+                errorMsg.value = "Something went wrong"
+            }
+
         }
 
     }
