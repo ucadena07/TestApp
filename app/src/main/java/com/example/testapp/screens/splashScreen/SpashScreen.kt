@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.testapp.R
+import com.example.testapp.authentication.AuthState
 import com.example.testapp.navigation.ApplicationScreens
 import kotlinx.coroutines.delay
 
@@ -36,7 +37,12 @@ fun SplashScreen(navController: NavHostController) {
         scale.animateTo(0.9f, tween(durationMillis = 800, easing = {OvershootInterpolator(8f).getInterpolation(it)}))
         delay(1000L)
         //check for auth state
-        navController.navigate(ApplicationScreens.LoginScreen.name)
+        if(AuthState.getAuthDetails() != null){
+            navController.navigate(ApplicationScreens.HomeScreen.name)
+        }else{
+            navController.navigate(ApplicationScreens.LoginScreen.name)
+        }
+
     }
     Surface(
         modifier = Modifier

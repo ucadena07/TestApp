@@ -70,14 +70,14 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.2")
 
     //viemodels
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
 
     //Hilt-Dagger
-    implementation("androidx.hilt:hilt-navigation-fragment:1.1.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation ("com.google.dagger:hilt-android:2.48.1")
     kapt  ("com.google.dagger:hilt-compiler:2.48.1")
 
@@ -124,7 +124,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     //Icons
-    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+    implementation("androidx.compose.material:material-icons-extended:1.6.2")
 
     //Validation
     val formconductor_version = "0.4.0"
@@ -133,6 +133,10 @@ dependencies {
 
     //Http Logging
     implementation ("com.squareup.okhttp3:logging-interceptor:4.7.2")
+
+    //jwt
+    implementation("com.auth0:java-jwt:3.18.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }
 
 kapt{

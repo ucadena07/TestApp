@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.testapp.authentication.AuthState
+import com.example.testapp.jwt.getUserDetailsFromToken
 import com.example.testapp.model.AuthRequest
 import com.example.testapp.repository.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,6 +24,7 @@ class LoginScreenViewModel @Inject constructor(private  val repo: AccountReposit
             val resp = repo.login(authRequest.value)
             Log.d("API RESP",resp.toString())
             if(resp.isSuccess){
+                AuthState.login(getUserDetailsFromToken(resp.result?.token!!))
                 home()
             }else{
                 errorMsg.value = "Something went wrong"

@@ -12,18 +12,18 @@ import javax.inject.Singleton
 object AuthState {
 
 
-    private var _authStateDetails: AuthStateDetails? = null
+    private var _authStateDetails: UserClaims? = null
     @Singleton
     @Provides
-    fun login(authStateDetails: AuthStateDetails) : AuthStateDetails{
+    fun login(authStateDetails: UserClaims) : UserClaims{
         _authStateDetails = authStateDetails
         return  _authStateDetails!!
     }
 
     @Singleton
     @Provides
-    fun getAuthDetails() : AuthStateDetails{
-        return _authStateDetails!!
+    fun getAuthDetails() : UserClaims?{
+        return _authStateDetails
     }
 
 }
