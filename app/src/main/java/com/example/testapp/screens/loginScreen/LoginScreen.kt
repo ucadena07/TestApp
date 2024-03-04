@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +51,7 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
           .padding(28.dp)
   ) {
       val scrollState = rememberScrollState()
+      val keyboardController = LocalSoftwareKeyboardController.current
 
       LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
       Column(modifier = Modifier
@@ -90,6 +92,7 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
               Spacer(modifier = Modifier.height(20.dp))
 
               NkButton(value = "Login", enabled = this.formState.value is FormResult.Success){
+                  keyboardController?.hide()
                   vm!!.login(){
                       navController!!.navigate(ApplicationScreens.HomeScreen.name)
                   }
