@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -27,6 +29,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.testapp.ui.theme.BgColor
 import com.example.testapp.ui.theme.md_theme_light_primary
 import com.example.testapp.ui.theme.md_theme_light_secondary
@@ -258,4 +263,19 @@ fun UnderlineTextComponent(value:String, modifier: Modifier = Modifier, onClick:
         )
     }
 
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppTooBar(
+    title: String,
+    icon: ImageVector? = null,
+    showProfile: Boolean,
+    navController: NavController,
+    onBackArrowClicked: () -> Unit = {}
+){
+    TopAppBar(
+        title = { Text(text = title) },
+        navigationIcon = { Icon(imageVector = Icons.Default.Home, contentDescription = "", modifier =  Modifier.padding(horizontal = 12.dp))}
+    )
 }
