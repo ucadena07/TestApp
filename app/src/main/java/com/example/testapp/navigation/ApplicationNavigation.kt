@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.testapp.screens.ForgotPasswordScreen.ForgotScreen
 import com.example.testapp.screens.homeScreen.HomeScreen
+import com.example.testapp.screens.homeScreen.HomeScreenViewModel
 import com.example.testapp.screens.loginScreen.LoginScreen
 import com.example.testapp.screens.loginScreen.LoginScreenViewModel
 import com.example.testapp.screens.splashScreen.SplashScreen
@@ -30,7 +31,8 @@ fun ApplicationNavigation(){
         }
         composable(ApplicationScreens.HomeScreen.name){
             BackHandler(true) {}
-            HomeScreen(navController)
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            HomeScreen(navController, homeViewModel)
         }
     }
 }

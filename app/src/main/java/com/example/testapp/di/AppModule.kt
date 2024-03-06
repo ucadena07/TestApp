@@ -1,5 +1,6 @@
 package com.example.testapp.di
 
+import com.example.testapp.authentication.AuthState
 import com.example.testapp.network.AppApi
 import com.example.testapp.utils.SD
 import dagger.Module
@@ -30,6 +31,7 @@ object AppModule {
             val request = chain.request()
             val newRequest = request.newBuilder()
                 .addHeader("user-agent", "android")
+                .addHeader("Authorization", "bearer ${AuthState.getAuthDetails()?.token}")
                 .build()
             chain.proceed(newRequest)
         }

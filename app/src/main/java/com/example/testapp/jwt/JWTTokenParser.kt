@@ -12,7 +12,9 @@ import kotlinx.serialization.json.jsonPrimitive
 fun getUserDetailsFromToken(jwtToken: String) : UserClaims{
     val payload = jwtToken.split('.')[1]
     val jsonBytes = parseBase64WithoutPadding(payload)
-    return parseJsonToMap(jsonBytes)
+    val response = parseJsonToMap(jsonBytes)
+    response.token = jwtToken
+    return response
 }
 private fun parseBase64WithoutPadding(payload: String): ByteArray {
     var base64 = ""
