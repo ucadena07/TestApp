@@ -10,6 +10,7 @@ import javax.inject.Inject
 class BuyerRepository @Inject constructor(private val api: AppApi) {
     suspend fun getBuyers() : ApiResponse<List<Buyer>?> {
         return try {
+
             api.getBuyers()
         } catch (e: Exception) {
             ApiResponse(result = null, errorMessages = listOf(e.localizedMessage), isSuccess = false)
