@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.testapp.authentication.AuthState
-import com.example.testapp.jwt.getUserDetailsFromToken
+import com.example.testapp.helpers.connectivity.jwt.getUserDetailsFromToken
 import com.example.testapp.model.AuthRequest
 import com.example.testapp.repository.AccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

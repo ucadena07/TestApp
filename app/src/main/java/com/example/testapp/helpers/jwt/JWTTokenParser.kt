@@ -1,4 +1,4 @@
-package com.example.testapp.jwt
+package com.example.testapp.helpers.connectivity.jwt
 
 import com.example.testapp.authentication.UserClaims
 import java.util.Base64
