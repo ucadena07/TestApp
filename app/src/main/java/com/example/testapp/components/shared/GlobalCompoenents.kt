@@ -1,12 +1,11 @@
 package com.example.testapp.components.shared
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -14,35 +13,44 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
+
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
+
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
+
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
+
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
+
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -55,9 +63,10 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.testapp.helpers.connectivity.IConnectivityObserver
+import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
 import com.example.testapp.ui.theme.BgColor
-import com.example.testapp.ui.theme.md_theme_light_primary
-import com.example.testapp.ui.theme.md_theme_light_secondary
+
 
 @Composable
 fun NormalTextComponent(value:String, modifier: Modifier = Modifier){
@@ -274,8 +283,32 @@ fun AppTooBar(
     navController: NavController,
     onBackArrowClicked: () -> Unit = {}
 ){
+    val ctx = LocalContext.current
+    lateinit var connectivityObserver : IConnectivityObserver
+    connectivityObserver = NetworkConnectivityObserver(ctx)
+    val status by connectivityObserver.observe().collectAsState(initial = IConnectivityObserver.ConnectivityStatus.Offline)
     TopAppBar(
-        title = { Text(text = title) },
-        navigationIcon = { Icon(imageVector = Icons.Default.Home, contentDescription = "", modifier =  Modifier.padding(horizontal = 12.dp))}
-    )
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
+        title = { Text(text = title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onPrimary) },
+        navigationIcon = { Icon(imageVector = Icons.Default.Home, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "", modifier =  Modifier.padding(horizontal = 12.dp))},
+        actions = {
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    imageVector = if(status == IConnectivityObserver.ConnectivityStatus.Online) Icons.Filled.Wifi else Icons.Filled.WifiOff,
+                    tint = if(status == IConnectivityObserver.ConnectivityStatus.Online) Color.Green.copy(0.5f) else MaterialTheme.colorScheme.onPrimary,
+                    contentDescription = "Localized description"
+                )
+            }
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    imageVector = Icons.Filled.AccountCircle,
+                    contentDescription = "Localized description",
+
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+
+        },
+
+        )
 }
