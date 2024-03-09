@@ -19,8 +19,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -34,6 +37,8 @@ import com.example.testapp.components.shared.NkPasswordTextField
 import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.components.shared.NormalTextComponent
 import com.example.testapp.components.shared.UnderlineTextComponent
+import com.example.testapp.helpers.connectivity.IConnectivityObserver
+import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
 import com.example.testapp.model.AuthRequest
 import com.example.testapp.navigation.ApplicationScreens
 import me.naingaungluu.formconductor.FieldResult
@@ -52,7 +57,10 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
   ) {
       val scrollState = rememberScrollState()
       val keyboardController = LocalSoftwareKeyboardController.current
-
+      val ctx = LocalContext.current
+      lateinit var connectivityObserver : IConnectivityObserver
+      connectivityObserver = NetworkConnectivityObserver(ctx)
+      val status by connectivityObserver.observe().collectAsState(initial = IConnectivityObserver.ConnectivityStatus.Offline)
       LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
       Column(modifier = Modifier
           .fillMaxSize()
@@ -99,7 +107,7 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
               }
               Spacer(modifier = Modifier.height(40.dp))
               if(vm!!.errorMsg.value.isNotEmpty()){
-                  Text(text = "Something went wrong",
+                  Text(text = vm.errorMsg.value,
                       textAlign = TextAlign.Center,
                       modifier = Modifier.fillMaxWidth(),
                       color = Color.Red,

@@ -1,11 +1,14 @@
 package com.example.testapp.di
 
+import android.app.Application
+import android.content.Context
 import com.example.testapp.authentication.AuthState
 import com.example.testapp.network.AppApi
 import com.example.testapp.utils.SD
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.naingaungluu.formconductor.composeui.BuildConfig
 import okhttp3.OkHttpClient
@@ -43,4 +46,8 @@ object AppModule {
             .build()
             .create(AppApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideContext(application: Application): Context = application.applicationContext
 }
