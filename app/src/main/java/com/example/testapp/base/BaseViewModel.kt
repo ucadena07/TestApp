@@ -6,9 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-
-
 open class BaseViewModel<T> : ViewModel() {
-    fun uiState(): LiveData<T> = uiState
-    protected val uiState: MutableLiveData<T> = MutableLiveData()
+    fun uiState(): MutableState<T?> = uiState
+    protected val uiState: MutableState<T?> = mutableStateOf(null)
 }
+

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -63,6 +65,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.size.Size
 import com.example.testapp.helpers.connectivity.IConnectivityObserver
 import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
 import com.example.testapp.ui.theme.BgColor
@@ -210,7 +213,7 @@ fun NkPasswordTextField(label: String,
     }
 }
 @Composable
-fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true, onClick: () -> Unit = {}){
+fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true,loading: Boolean = false, onClick: () -> Unit = {}){
 
 
     Button(onClick = { onClick() },
@@ -245,7 +248,12 @@ fun NkButton(value: String, color: Color? =  null, enabled: Boolean = true, onCl
             contentAlignment = Alignment.Center,
 
         ){
+            if(!loading){
                 Text(text = value, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            }else{
+                CircularProgressIndicator(color = Color.White, modifier = Modifier.size(32.dp))
+            }
+
 
         }
 

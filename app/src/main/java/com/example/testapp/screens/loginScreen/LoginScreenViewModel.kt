@@ -21,23 +21,27 @@ import javax.inject.Inject
 class LoginScreenViewModel @Inject constructor(private  val repo: AccountRepository) : ViewModel(){
     val authRequest = mutableStateOf(AuthRequest())
     val errorMsg = mutableStateOf("")
+    val loading = mutableStateOf(false)
     fun login(home: () -> Unit = {}){
         errorMsg.value = ""
+        loading.value = true
         Log.d("STS", SD.NetworkStatus.name)
         if(SD.NetworkStatus == IConnectivityObserver.ConnectivityStatus.Online){
             viewModelScope.launch {
                 val resp = repo.login(authRequest.value)
                 Log.d("API RESP",resp.toString())
                 if(resp.isSuccess){
+                    loading.value = false
                     AuthState.login(getUserDetailsFromToken(resp.result?.token!!))
                     home()
                 }else{
+                    loading.value = false
                     errorMsg.value = "Something went wrong"
                 }
 
             }
         }else{
-        
+            loading.value = false
             errorMsg.value = "No Network Connectivity Found"
         }
 

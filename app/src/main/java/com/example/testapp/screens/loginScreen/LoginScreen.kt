@@ -99,14 +99,14 @@ fun LoginScreen(navController: NavHostController?, vm: LoginScreenViewModel?) {
               }
               Spacer(modifier = Modifier.height(20.dp))
 
-              NkButton(value = "Login", enabled = this.formState.value is FormResult.Success){
+              NkButton(value = "Login", enabled = this.formState.value is FormResult.Success || vm!!.loading.value, loading = vm!!.loading.value){
                   keyboardController?.hide()
-                  vm!!.login(){
+                  vm.login(){
                       navController!!.navigate(ApplicationScreens.HomeScreen.name)
                   }
               }
               Spacer(modifier = Modifier.height(40.dp))
-              if(vm!!.errorMsg.value.isNotEmpty()){
+              if(vm.errorMsg.value.isNotEmpty()){
                   Text(text = vm.errorMsg.value,
                       textAlign = TextAlign.Center,
                       modifier = Modifier.fillMaxWidth(),
