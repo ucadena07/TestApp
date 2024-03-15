@@ -68,7 +68,7 @@ private fun parseJsonToMap(jsonBytes: ByteArray): UserClaims {
         phoneNumber = x["PhoneNumber"],
         environment = x["Environment"],
         siteUserId = x["SiteUserID"]?.toInt(),
-        exp = x["exp"]?.toInt(),
+        exp = x["exp"]?.toLong(),
         role = x["role"]?.split(",")
     )
 }

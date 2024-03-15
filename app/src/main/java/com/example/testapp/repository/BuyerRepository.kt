@@ -11,7 +11,11 @@ class BuyerRepository @Inject constructor(private val api: AppApi) {
     suspend fun getBuyers() : ApiResponse<List<Buyer>?> {
         return try {
 
-            api.getBuyers()
+            val data = api.getBuyers()
+            if(data.result  == null){
+                data.result = emptyList()
+            }
+            return  data
         } catch (e: Exception) {
             ApiResponse(result = null, errorMessages = listOf(e.localizedMessage), isSuccess = false)
         }

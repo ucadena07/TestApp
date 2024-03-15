@@ -10,6 +10,6 @@ data class UserClaims(
     val environment: String?,
     val siteUserId: Int?,
     val role: List<String>?,
-    val exp : Int?,
+    val exp : Long?,
     var token: String? = null
     )

@@ -2,6 +2,7 @@ package com.example.testapp.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import com.example.testapp.authentication.AuthState
 import com.example.testapp.network.AppApi
 import com.example.testapp.utils.SD
@@ -36,8 +37,12 @@ object AppModule {
                 .addHeader("user-agent", "android")
                 .addHeader("Authorization", "bearer ${AuthState.getAuthDetails()?.token}")
                 .build()
+
+            Log.d("API REQUEST BODY", request.body.toString())
             chain.proceed(newRequest)
         }
+
+
 
         return Retrofit.Builder()
             .baseUrl(SD.BaseUrl)
