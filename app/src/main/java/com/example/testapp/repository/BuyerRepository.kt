@@ -10,7 +10,6 @@ import javax.inject.Inject
 class BuyerRepository @Inject constructor(private val api: AppApi) {
     suspend fun getBuyers() : ApiResponse<List<Buyer>?> {
         return try {
-
             val data = api.getBuyers()
             if(data.result  == null){
                 data.result = emptyList()

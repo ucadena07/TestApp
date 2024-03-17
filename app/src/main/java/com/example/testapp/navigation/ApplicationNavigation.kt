@@ -3,10 +3,13 @@ package com.example.testapp.navigation
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.testapp.screens.ForgotPasswordScreen.ForgotScreen
+import com.example.testapp.screens.buyerScreen.BuyerFormScreen
 import com.example.testapp.screens.homeScreen.HomeScreen
 import com.example.testapp.screens.homeScreen.HomeScreenViewModel
 import com.example.testapp.screens.loginScreen.LoginScreen
@@ -33,6 +36,13 @@ fun ApplicationNavigation(){
             BackHandler(true) {}
             val homeViewModel = hiltViewModel<HomeScreenViewModel>()
             HomeScreen(navController, homeViewModel)
+        }
+        composable("${ApplicationScreens.BuyerFormScreen.name}/{id}", arguments = listOf(navArgument("id"){
+            type = NavType.IntType
+        })){
+            it.arguments?.getInt("id").let {id ->
+                BuyerFormScreen(id!!)
+            }
         }
     }
 }
