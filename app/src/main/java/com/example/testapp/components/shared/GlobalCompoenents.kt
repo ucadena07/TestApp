@@ -68,6 +68,7 @@ import androidx.navigation.NavController
 import coil.size.Size
 import com.example.testapp.helpers.connectivity.IConnectivityObserver
 import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
+import com.example.testapp.navigation.ApplicationScreens
 import com.example.testapp.ui.theme.BgColor
 
 
@@ -307,7 +308,7 @@ fun AppTooBar(
                     contentDescription = "Localized description"
                 )
             }
-            IconButton(onClick = { /* do something */ }) {
+            IconButton(onClick = { navController.navigate(ApplicationScreens.AccountDetailsScreen.name)}) {
                 Icon(
                     imageVector = Icons.Filled.AccountCircle,
                     contentDescription = "Localized description",

@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.testapp.screens.ForgotPasswordScreen.ForgotScreen
+import com.example.testapp.screens.accountDetailsScreen.AccountDetailsScreen
 import com.example.testapp.screens.buyerScreen.BuyerFormScreen
 import com.example.testapp.screens.homeScreen.HomeScreen
 import com.example.testapp.screens.homeScreen.HomeScreenViewModel
@@ -22,6 +23,9 @@ fun ApplicationNavigation(){
     NavHost(navController = navController, startDestination = ApplicationScreens.SplashScreen.name){
         composable(ApplicationScreens.SplashScreen.name){
             SplashScreen(navController)
+        }
+        composable(ApplicationScreens.AccountDetailsScreen.name){
+            AccountDetailsScreen(navController)
         }
         composable(ApplicationScreens.LoginScreen.name){
             BackHandler(true) {}
