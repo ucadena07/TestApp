@@ -3,6 +3,7 @@ package com.example.testapp.repository
 import com.example.testapp.model.AuthRequest
 import com.example.testapp.model.AuthResponse
 import com.example.testapp.model.Buyer
+import com.example.testapp.model.dto.BuyerDTO
 import com.example.testapp.network.ApiResponse
 import com.example.testapp.network.AppApi
 import javax.inject.Inject
@@ -14,6 +15,15 @@ class BuyerRepository @Inject constructor(private val api: AppApi) {
             if(data.result  == null){
                 data.result = emptyList()
             }
+            return  data
+        } catch (e: Exception) {
+            ApiResponse(result = null, errorMessages = listOf(e.localizedMessage), isSuccess = false)
+        }
+    }
+
+    suspend fun get(id: Int) : ApiResponse<BuyerDTO?>{
+        return try {
+            val data = api.get(id)
             return  data
         } catch (e: Exception) {
             ApiResponse(result = null, errorMessages = listOf(e.localizedMessage), isSuccess = false)

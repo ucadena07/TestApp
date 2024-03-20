@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.example.testapp.screens.ForgotPasswordScreen.ForgotScreen
 import com.example.testapp.screens.accountDetailsScreen.AccountDetailsScreen
 import com.example.testapp.screens.buyerScreen.BuyerFormScreen
+import com.example.testapp.screens.buyerScreen.BuyerFormViewModel
 import com.example.testapp.screens.homeScreen.HomeScreen
 import com.example.testapp.screens.homeScreen.HomeScreenViewModel
 import com.example.testapp.screens.loginScreen.LoginScreen
@@ -45,7 +46,9 @@ fun ApplicationNavigation(){
             type = NavType.IntType
         })){
             it.arguments?.getInt("id").let {id ->
-                BuyerFormScreen(id!!)
+                val vm = hiltViewModel<BuyerFormViewModel>()
+
+                BuyerFormScreen(vm)
             }
         }
     }
