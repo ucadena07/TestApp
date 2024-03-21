@@ -15,11 +15,11 @@ class BuyerFormViewModel @Inject constructor(private  val repo: BuyerRepository)
     val buyerDTO = mutableStateOf<BuyerDTO?>(null)
 
 
-    suspend fun get(id: Int){
+     fun get(id: Int){
         viewModelScope.launch {
             val resp = repo.get(id)
             if (resp.isSuccess){
-                Log.d("API RESP",resp.result.toString())
+                Log.d("API RESP",resp.result?.details.toString())
                 buyerDTO.value = resp.result
             }
         }

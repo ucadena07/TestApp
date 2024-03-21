@@ -38,7 +38,7 @@ object AppModule {
                 .addHeader("Authorization", "bearer ${AuthState.getAuthDetails()?.token}")
                 .build()
 
-            Log.d("API REQUEST BODY", request.body.toString())
+            //Log.d("API REQUEST BODY", request.body.toString())
             chain.proceed(newRequest)
         }
 

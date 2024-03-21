@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.testapp.authentication.AuthState
 import com.example.testapp.components.buyers.BuyerCard
+import com.example.testapp.components.shared.NkTextField
 import com.example.testapp.layout.MainLayout
 import com.example.testapp.model.Buyer
 import com.example.testapp.navigation.ApplicationScreens
@@ -36,7 +37,9 @@ import com.example.testapp.utils.formatDateTime
 fun HomeScreen(navController: NavHostController, homeViewModel: HomeScreenViewModel) {
     MainLayout(navController = navController) {
         Column(modifier = Modifier.padding(3.dp)) {
+            
             Text(text = "Buyers", style = MaterialTheme.typography.headlineMedium)
+            //NkTextField(label = "Search")
             Spacer(modifier = Modifier.height(10.dp))
             LazyColumn {
                 items(homeViewModel.buyers.value!!){

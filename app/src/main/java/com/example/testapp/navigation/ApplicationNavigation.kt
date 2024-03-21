@@ -47,8 +47,8 @@ fun ApplicationNavigation(){
         })){
             it.arguments?.getInt("id").let {id ->
                 val vm = hiltViewModel<BuyerFormViewModel>()
-
-                BuyerFormScreen(vm)
+                vm.get(id!!)
+                BuyerFormScreen(vm, navController)
             }
         }
     }

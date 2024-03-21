@@ -122,7 +122,8 @@ fun NkTextField(
         OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(4.dp)),
+            .clip(RoundedCornerShape(4.dp))
+            ,
         label =  {Text(text = label) },
         value = it,
         onValueChange = {value ->
@@ -142,12 +143,13 @@ fun NkTextField(
         ),
         keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
 
-        leadingIcon = {
+        leadingIcon =
             if(icon != null){
-                Icon(imageVector = icon, contentDescription = "")
+                {Icon(imageVector = icon, contentDescription = "")}
+            } else{
+                null
             }
 
-        }
     )
     }
 }
