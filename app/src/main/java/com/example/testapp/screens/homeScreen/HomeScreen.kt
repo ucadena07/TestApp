@@ -35,7 +35,7 @@ import com.example.testapp.utils.formatDateTime
 
 @Composable
 fun HomeScreen(navController: NavHostController, homeViewModel: HomeScreenViewModel) {
-    MainLayout(navController = navController) {
+    MainLayout(navController = navController, isHome = true) {
         Column(modifier = Modifier.padding(3.dp)) {
             
             Text(text = "Buyers", style = MaterialTheme.typography.headlineMedium)

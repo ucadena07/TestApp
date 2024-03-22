@@ -291,6 +291,7 @@ fun AppTooBar(
     title: String,
     icon: ImageVector? = null,
     showProfile: Boolean,
+    isHome: Boolean,
     navController: NavController,
     onBackArrowClicked: () -> Unit = {}
 ){
@@ -301,12 +302,26 @@ fun AppTooBar(
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
         title = { Text(text = title, style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onPrimary) },
-        navigationIcon = { Icon(imageVector = Icons.Default.Home, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "", modifier =  Modifier.padding(horizontal = 12.dp))},
+        navigationIcon = {
+                            if(!isHome && icon == null){
+                                Icon(imageVector = Icons.Default.Home, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "",
+                                    modifier =  Modifier.padding(horizontal = 12.dp).clickable {
+                                        navController.navigate(ApplicationScreens.HomeScreen.name)
+                                    })
+                            }else{
+                                if(icon != null){
+                                    Icon(imageVector = icon, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "",
+                                        modifier =  Modifier.padding(horizontal = 12.dp).clickable {
+                                            onBackArrowClicked()
+                                        })
+                                }
+                            }
+                         },
         actions = {
             IconButton(onClick = { /* do something */ }) {
                 Icon(
                     imageVector = if(status == IConnectivityObserver.ConnectivityStatus.Online) Icons.Filled.Wifi else Icons.Filled.WifiOff,
-                    tint = if(status == IConnectivityObserver.ConnectivityStatus.Online) Color.Green.copy(0.5f) else MaterialTheme.colorScheme.onPrimary,
+                    tint = MaterialTheme.colorScheme.onPrimary,
                     contentDescription = "Localized description"
                 )
             }

@@ -11,8 +11,8 @@ import androidx.navigation.NavController
 import com.example.testapp.components.shared.AppTooBar
 
 @Composable
-fun MainLayout(navController: NavController,content: @Composable() () -> Unit){
-    Scaffold(topBar = { AppTooBar(title = "NK App", showProfile = false, navController = navController) }) {
+fun MainLayout(navController: NavController,isHome: Boolean = false,content: @Composable() () -> Unit){
+    Scaffold(topBar = { AppTooBar(title = "NK App", showProfile = false, navController = navController, isHome = isHome) }) {
         Surface(
             color = Color.White,
             modifier = Modifier
