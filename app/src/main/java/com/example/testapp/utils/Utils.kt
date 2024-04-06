@@ -1,6 +1,11 @@
 package com.example.testapp.utils
 
+import android.app.Application
+import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
+import androidx.core.content.ContextCompat
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatterBuilder
@@ -52,5 +57,13 @@ fun formatApiDateToTimestamp(dateString: String?): String {
 
     }else{
        return  ""
+    }
+}
+
+fun hasRequiredPermissions(context: Context): Boolean{
+    return  SD.CAMERAX_PERMISSIONS.all{
+        ContextCompat.checkSelfPermission(
+                context,it
+                ) == PackageManager.PERMISSION_GRANTED
     }
 }

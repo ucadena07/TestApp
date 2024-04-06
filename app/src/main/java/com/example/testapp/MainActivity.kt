@@ -1,5 +1,6 @@
 package com.example.testapp
 
+import android.Manifest
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -14,9 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat
 import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
 import com.example.testapp.navigation.ApplicationNavigation
 import com.example.testapp.ui.theme.TestAppTheme
+import com.example.testapp.utils.SD
+import com.example.testapp.utils.hasRequiredPermissions
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,12 +28,19 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!hasRequiredPermissions(applicationContext)){
+            ActivityCompat.requestPermissions(
+                this, SD.CAMERAX_PERMISSIONS,0
+            )
+        }
         setContent {
             TestAppTheme {
                 TestApp()
             }
         }
     }
+
+
 }
 
 @Composable

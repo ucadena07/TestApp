@@ -1,4 +1,8 @@
 package com.example.testapp.components.shared
+import android.graphics.Bitmap
+import androidx.camera.view.LifecycleCameraController
+import androidx.camera.view.PreviewView
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,6 +14,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -17,6 +24,7 @@ import androidx.compose.material.icons.Icons
 
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Lock
 
 import androidx.compose.material.icons.filled.Visibility
@@ -28,10 +36,14 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 
 import androidx.compose.material3.TextFieldDefaults
@@ -43,6 +55,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -50,9 +64,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -64,12 +80,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import coil.size.Size
 import com.example.testapp.helpers.connectivity.IConnectivityObserver
 import com.example.testapp.helpers.connectivity.NetworkConnectivityObserver
 import com.example.testapp.navigation.ApplicationScreens
 import com.example.testapp.ui.theme.BgColor
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -305,15 +323,19 @@ fun AppTooBar(
         navigationIcon = {
                             if(!isHome && icon == null){
                                 Icon(imageVector = Icons.Default.Home, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "",
-                                    modifier =  Modifier.padding(horizontal = 12.dp).clickable {
-                                        navController.navigate(ApplicationScreens.HomeScreen.name)
-                                    })
+                                    modifier = Modifier
+                                        .padding(horizontal = 12.dp)
+                                        .clickable {
+                                            navController.navigate(ApplicationScreens.HomeScreen.name)
+                                        })
                             }else{
                                 if(icon != null){
                                     Icon(imageVector = icon, tint = MaterialTheme.colorScheme.onPrimary, contentDescription = "",
-                                        modifier =  Modifier.padding(horizontal = 12.dp).clickable {
-                                            onBackArrowClicked()
-                                        })
+                                        modifier = Modifier
+                                            .padding(horizontal = 12.dp)
+                                            .clickable {
+                                                onBackArrowClicked()
+                                            })
                                 }
                             }
                          },
@@ -337,4 +359,54 @@ fun AppTooBar(
         },
 
         )
+}
+
+@Composable
+fun Toast(){
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+
+}
+
+@Composable
+fun CameraPreview(
+    controller: LifecycleCameraController,
+    modifier: Modifier = Modifier
+){
+    val lifeCycleOwner = LocalLifecycleOwner.current
+    AndroidView(factory = {
+        PreviewView(it).apply {
+            this.controller = controller
+            controller.bindToLifecycle(lifeCycleOwner)
+        }
+    },
+        modifier = modifier)
+}
+
+@Composable
+fun PhotoBottomSheetContent(
+    bitmaps: List<Bitmap>,
+    modifier: Modifier = Modifier
+){
+    if(bitmaps.isEmpty()){
+        Box(modifier = Modifier.padding(16.dp), contentAlignment = Alignment.Center){
+            Text(text = "No Images Found")
+        }
+    }else{
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalItemSpacing = 16.dp,
+        contentPadding = PaddingValues(16.dp),
+        modifier = modifier
+    ) {
+
+            items(bitmaps){
+                Image(bitmap = it.asImageBitmap(), contentDescription = "", modifier = Modifier.clip(
+                    RoundedCornerShape(10.dp)))
+            }
+        }
+
+    }
 }
