@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import coil.size.Size
 import com.example.testapp.authentication.AuthState
 import com.example.testapp.layout.MainLayout
+import com.example.testapp.navigation.ApplicationScreens
 import com.example.testapp.utils.formatDate
 import com.example.testapp.utils.formatDateTime
 
@@ -41,6 +42,9 @@ fun AccountDetailsScreen(navController: NavController) {
             Text(text = AuthState.getAuthDetails()?.phoneNumber ?: "", modifier = Modifier.padding(3.dp), fontSize = 15.sp, maxLines = 1, overflow = TextOverflow.Clip)
             Text(text = "Token Exp: ${formatDate(AuthState.getAuthDetails()?.exp!!)} @ ${formatDateTime(AuthState.getAuthDetails()?.exp!!)}", modifier = Modifier.padding(3.dp), fontSize = 15.sp, maxLines = 1, overflow = TextOverflow.Clip)
             Text(text = "Env: ${AuthState.getAuthDetails()?.environment}", modifier = Modifier.padding(3.dp), fontSize = 15.sp, maxLines = 1, overflow = TextOverflow.Clip)
+            Button(onClick = { navController.navigate(ApplicationScreens.SystemPermissionsScreen.name) }, modifier = Modifier.padding(20.dp)) {
+                Text(text = "Manage System Permissions")
+            }
             Button(onClick = { /*TODO*/ }, modifier = Modifier.padding(20.dp)) {
                 Text(text = "Sign Out")
             }

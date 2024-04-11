@@ -17,6 +17,8 @@ import com.example.testapp.screens.homeScreen.HomeScreenViewModel
 import com.example.testapp.screens.loginScreen.LoginScreen
 import com.example.testapp.screens.loginScreen.LoginScreenViewModel
 import com.example.testapp.screens.splashScreen.SplashScreen
+import com.example.testapp.screens.systemPermissionsScreen.SystemPermissionScreenVm
+import com.example.testapp.screens.systemPermissionsScreen.SystemPermissionsScreen
 
 @Composable
 fun ApplicationNavigation(){
@@ -41,6 +43,11 @@ fun ApplicationNavigation(){
             BackHandler(true) {}
             val homeViewModel = hiltViewModel<HomeScreenViewModel>()
             HomeScreen(navController, homeViewModel)
+        }
+        composable(ApplicationScreens.SystemPermissionsScreen.name){
+            BackHandler(true) {}
+            val vm = hiltViewModel<SystemPermissionScreenVm>()
+            SystemPermissionsScreen(navController, vm)
         }
         composable("${ApplicationScreens.BuyerFormScreen.name}/{id}", arguments = listOf(navArgument("id"){
             type = NavType.IntType
