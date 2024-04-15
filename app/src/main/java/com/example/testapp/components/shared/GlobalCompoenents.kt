@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -409,4 +410,71 @@ fun PhotoBottomSheetContent(
         }
 
     }
+}
+
+@Composable
+fun PermissionDialog(
+    permissionTextProvider: IPermissionTextProvider,
+    isPermanentlyDeclined: Boolean,
+    onDismiss: () -> Unit,
+    onOkClick:() -> Unit,
+    onGoToAppSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+){
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+               Button(onClick = {
+                   if(isPermanentlyDeclined) onGoToAppSettingsClick() else onOkClick()
+               }) {
+                   Text(text = if(isPermanentlyDeclined) "Grant Permission" else "OK")
+               }         
+        },
+        dismissButton = {
+
+        },
+        title = {
+                Text(text = "")
+        },
+        text = {
+                Text(text = permissionTextProvider.getDescription(isPermanentlyDeclined))
+        },
+        modifier =  modifier
+    )
+}
+
+interface  IPermissionTextProvider{
+   fun getDescription(isPermanentlyDeclined: Boolean) : String
+}
+
+class CameraPermissionTextProvider : IPermissionTextProvider{
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if(isPermanentlyDeclined){
+            "It seems you permanently declined camera permission. " + "You can go to the app settings to grant it."
+        }else{
+            "This app needs access access to your camera."
+        }
+    }
+
+}
+class AudioPermissionTextProvider : IPermissionTextProvider{
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if(isPermanentlyDeclined){
+            "It seems you permanently declined camera permission. " + "You can go to the app settings to grant it."
+        }else{
+            "This app needs access access to your microphone."
+        }
+    }
+
+}
+
+class PhonePermissionTextProvider : IPermissionTextProvider{
+    override fun getDescription(isPermanentlyDeclined: Boolean): String {
+        return if(isPermanentlyDeclined){
+            "It seems you permanently declined camera permission. " + "You can go to the app settings to grant it."
+        }else{
+            "This app needs access access to your phone calling permission."
+        }
+    }
+
 }
