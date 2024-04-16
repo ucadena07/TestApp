@@ -434,7 +434,7 @@ fun PermissionDialog(
 
         },
         title = {
-                Text(text = "")
+                Text(text = "Permission Required")
         },
         text = {
                 Text(text = permissionTextProvider.getDescription(isPermanentlyDeclined))
