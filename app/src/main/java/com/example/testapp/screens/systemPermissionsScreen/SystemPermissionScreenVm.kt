@@ -10,12 +10,12 @@ class SystemPermissionScreenVm @Inject constructor() : ViewModel(){
     val visiblePermissionDialogQueue = mutableStateListOf<String>()
 
     fun dismissDialog(){
-        visiblePermissionDialogQueue.removeLast()
+        visiblePermissionDialogQueue.removeFirst()
     }
 
     fun onPermissionResult(permission: String, isGranted: Boolean){
-        if(!isGranted){
-            visiblePermissionDialogQueue.add(0,permission)
+        if(!isGranted && !visiblePermissionDialogQueue.contains(permission)){
+            visiblePermissionDialogQueue.add(permission)
         }
     }
 }

@@ -1,13 +1,18 @@
 package com.example.testapp
 
 import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,26 +26,29 @@ import com.example.testapp.navigation.ApplicationNavigation
 import com.example.testapp.ui.theme.TestAppTheme
 import com.example.testapp.utils.SD
 import com.example.testapp.utils.hasRequiredPermissions
+import com.example.testapp.utils.openAppSettings
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        if(!hasRequiredPermissions(applicationContext)){
-            ActivityCompat.requestPermissions(
-                this, SD.CAMERAX_PERMISSIONS,0
-            )
-        }
+//        if(!hasRequiredPermissions(applicationContext)){
+//            ActivityCompat.requestPermissions(
+//                this, SD.CAMERAX_PERMISSIONS,0
+//            )
+//        }
         setContent {
             TestAppTheme {
+                Button(onClick = { openAppSettings()}) {
+
+                }
                 TestApp()
             }
         }
     }
-
-
 }
 
 @Composable
@@ -75,3 +83,4 @@ fun TestAppPreview() {
         TestApp()
     }
 }
+
